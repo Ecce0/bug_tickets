@@ -12,12 +12,14 @@ require('dotenv').config()
 //Connection to DB
 connectDB()
 
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
+
+
 app.get('/', (req, res) => {
   res.status(200).send('Help Desk API')
 })
 
-app.use(express.json())
-app.use(express.urlencoded({ extended: false }))
 
 
 //Routes
