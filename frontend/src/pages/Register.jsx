@@ -4,6 +4,7 @@ import { toast } from 'react-toastify'
 import { useSelector, useDispatch} from 'react-redux'
 import { registerUser, reset } from '../features/auth/authSlice'
 import { useNavigate } from 'react-router-dom'
+import Spinner from '../components/Spinner'
 
 const Register = () => {
   const navigate = useNavigate()
@@ -53,6 +54,11 @@ const onSubmit = (e) => {
 
   dispatch(registerUser(userData))
  }
+}
+
+
+if(isLoading){
+  return <Spinner />
 }
 
   return(
