@@ -1,15 +1,41 @@
-import React, { useState } from "react";
-import { useSelector } from 'react-redux'
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import { createNewTicket, reset} from '../features/tickets/ticketSlice'
+import Spinner from '../components/Spinner'
+
 
 const NewTicket = () => {
   const { user } = useSelector(state => state.auth)
+  const { isLoading, isError, isSuccess, message} = useSelector(state => state.ticket)
   const [ name] = useState(user.name)
   const [ email ] = useState(user.email)
   const [ product, setProduct ] = useState('iPhone')
   const [ description, setDescription ] = useState('')
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+ useEffect(() => {
+  if(isError){
+    toast.error(message)
+  } 
+  
+  if(isSuccess) {
+    dispatch(reset, navigate('/tickets'))
+  }
+  
+
+  dispatch(reset)
+ },[dispatch, isError, isSuccess, message, navigate])
 
   const onSubmit = (e) => {
     e.preventDefault()
+    dispatch(createNewTicket({product, description}))
+  }
+
+  if(isLoading) {
+    return <Spinner />
   }
 
   return(
@@ -29,7 +55,7 @@ const NewTicket = () => {
         <label htmlFor="name">Customer Email</label>
         <input type="email" className="form-control" value={email} disabled/>
       </div>
-      <form onSumbit={onSubmit}>
+      <form onSubmit={onSubmit}>
         <div className="form-group">
         <label htmlFor="product">Product</label>
         <select name="product" id="product" value={product} onChange={(e) => setProduct(e.target.value)}>
