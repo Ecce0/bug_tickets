@@ -14,7 +14,7 @@ const Home = () => {
         Create New Ticket
     </Link>
 
-    <Link to='/ticket' className="btn btn-block">
+    <Link to='/tickets' className="btn btn-block">
       <FaTicketAlt /> View my Tickets
     </Link>
     </>

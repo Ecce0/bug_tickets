@@ -4,10 +4,10 @@ const Ticket = require('../models/ticketModel')
 const User = require('../models/userModel')
 
 
-//@desc Get user tix
+//@desc Get user ticket
 //@route GET /api/tickets
 //@access Private
-const getTix  = asyncHandler( async (req, res) => {
+const getTicket  = asyncHandler( async (req, res) => {
   //get user using ID in JWT
   const user = await User.findById(req.user.id)
   if(!user) {
@@ -15,9 +15,9 @@ const getTix  = asyncHandler( async (req, res) => {
     throw new Error('User not found')
   }
 
-  const tix = await Ticket.find({user: req.user.id})
+  const ticket = await Ticket.find({user: req.user.id})
 
-  res.status(200).json({tix})
+  res.status(200).json(ticket)
 })
 
 //@desc Get user ticket
@@ -44,10 +44,10 @@ const getUserTicket  = asyncHandler( async (req, res) => {
   res.status(200).json(ticket)
 })
 
-//@desc create new tix
+//@desc create new ticket
 //@route POST /api/tickets
 //@access Private
-const createTix  = asyncHandler( async (req, res) => {
+const createTicket  = asyncHandler( async (req, res) => {
   const { product, description } = req.body
 
   if(!product || !description) {
@@ -121,13 +121,13 @@ const updateUserTicket  = asyncHandler( async (req, res) => {
     throw new Error('not authorized')
   }
 
-   const updatedTix = await Ticket.findByIdAndUpdate(req.params.id, req.body, { new: true })
-   res.status(200).json(updatedTix)
+   const updatedticket = await Ticket.findByIdAndUpdate(req.params.id, req.body, { new: true })
+   res.status(200).json(updatedticket)
 })
 
 module.exports = {
-  getTix,
-  createTix,
+  getTicket,
+  createTicket,
   getUserTicket,
   deleteUserTicket,
   updateUserTicket
