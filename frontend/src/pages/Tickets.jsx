@@ -35,9 +35,9 @@ if(isLoading) {
         <div>Products</div>
         <div>Status</div>
       </div>
-      {tickets.map((ticket) => {
+      {tickets.map((ticket) => (
         <TicketItem key={ticket._id} ticket={ticket} />
-      })}
+      ))}
      </div>
      </>
   )
